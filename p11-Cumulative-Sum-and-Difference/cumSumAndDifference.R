@@ -1,6 +1,6 @@
 cumsum_difference<-function(){
 # 
-# Cumulative Sum & Difference
+# Cumulative Sum & Difference           Purple Book pg11, 26.5.15
 # ---------------------------
 # ref: R for Dummies chapter 4 (end of),p98
 #
