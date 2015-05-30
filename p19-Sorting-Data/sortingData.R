@@ -19,7 +19,7 @@ sortingData<-function(){
   rankByArea <- order(ms$Area);
   # Now we can relist the dataframe
   msr <- ms[rankByArea,];
-#  Area     Long    Latt                Div Region
+#                   Area     Long    Latt                Div Region
 #  Delaware         1982 -74.9841 38.6777     South Atlantic  South
 #  Maryland         9891 -76.6459 39.2778     South Atlantic  South
 #  West Virginia   24070 -80.6665 38.4204     South Atlantic  South
