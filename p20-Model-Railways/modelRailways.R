@@ -18,12 +18,13 @@ modelRailways<-function(){
     #
     # However, I could put double value on the scenery
     # valueOfScene <- 2*(6 - sceneAsNumbers); # This will convert A to 10, B to 8 etc.
+    valueOfScene <- 1.5*(6 - sceneAsNumbers); # This will convert A to 10, B to 8 etc.
     return(valueOfScene);
   }
   mr$total=mr$op + valueOfScene(sceneAsNumbers);
   # Now let's order by total from best to worst
   rankByTotal<-order(mr$total,decreasing=T);
   mr <- mr[rankByTotal,];
-  write.csv(mr,file='orderedOpinion.csv');
+  #write.csv(mr,file='orderedOpinion.csv');
   return(mr);
 }
