@@ -30,4 +30,8 @@ oldFaithfulRunsTest<-function(){
     }
   }
   return(numberOfRuns); # returns 188
+  # Z-test gives z = 6.3. Therefore reject Ho.
+  # Note that the histogram clearly shows short and long duration eruptions, 
+  # and the number of runs value of 188 suggests that about 70% of the time
+  # the oscillate between the two.
 }
