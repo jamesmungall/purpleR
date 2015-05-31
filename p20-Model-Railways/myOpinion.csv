@@ -25,7 +25,7 @@ id, name, gauge, op, scene
 26, "Penhallick Junction", "OO", 2, B
 27, "RS Tower & Guisburgh Depot", "OO", 5, D
 28, "Ryan's Mill", "O", 3, D
-29, "St Frazal de Pantalun", 0, C
+29, "St Frazal de Pantalun", "N", 0, C
 30, "Southurst", "OO", 3, C
 31, "Dingsdabumster", "OO", NA, NA
 32, "Drag Lair", "OO9", 1, D
@@ -35,4 +35,3 @@ id, name, gauge, op, scene
 36, "Whimsey", "OO", NA, NA
 37, "The Junction", "N", 2, D
 38, "Wychwaye", "O", NA, B
-
