@@ -24,5 +24,6 @@ modelRailways<-function(){
   # Now let's order by total from best to worst
   rankByTotal<-order(mr$total,decreasing=T);
   mr <- mr[rankByTotal,];
+  write.csv(mr,file='orderedOpinion.csv');
   return(mr);
 }
