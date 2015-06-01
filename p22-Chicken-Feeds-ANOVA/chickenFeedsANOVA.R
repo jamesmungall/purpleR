@@ -23,6 +23,41 @@ chickenFeedsANOVA<-function(){
   #----------------------------------------------------------------------------
   # 
   # To get the data into this format
+  cw<-chickwts; # make my own copy
+  # function to compute sum of squares of a vector
+  j.stat.sumOfSquares <- function(dataVector){
+    if(!is.vector(dataVector)){
+      stop('Argument to j.stat.sumOfSquares is not a vector.');
+    }
+    sumOfSquares <- sum((dataVector - mean(dataVector))^2);
+    return(sumOfSquares);
+  }
+  totalSS <- j.stat.sumOfSquares(cw$weight);
+  
+  # select 1st feed type
+  feedTypes <- levels(cw$feed); # feed is a factor with 6 levels.
+  
+  withinSS = 0;
+  for(i in 1:length(feedTypes)){
+    feedData<- cw[(cw$feed==feedTypes[i]),];
+    ssi <- j.stat.sumOfSquares(feedData$weight);
+    withinSS <- withinSS+ssi;
+  }
+  betweenSS = totalSS - withinSS;
+  dofBetween = (length(feedTypes)-1);
+  dofWithin = length(cw$feed)-length(feedTypes);
+  MSbetween = betweenSS/dofBetween;
+  MSwithin = withinSS / dofWithin;
+  Fresult = MSbetween / MSwithin;
+  pvalue = df(Fresult,dofBetween, dofWithin);
+  anovaTable <- list(betweenSS=betweenSS,withinSS=withinSS,totalSS=totalSS,
+                     dofBetween = dofBetween,dofWithin=dofWithin,
+                     MSbetween = MSbetween, MSwithin=MSwithin,
+                     Fresult=Fresult, pvalue=pvalue);
+  
+  return(anovaTable);
+  
+  
   
 }
 
