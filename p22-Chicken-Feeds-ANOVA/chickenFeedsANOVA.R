@@ -24,22 +24,14 @@ chickenFeedsANOVA<-function(){
   # 
   # To get the data into this format
   cw<-chickwts; # make my own copy
-  # function to compute sum of squares of a vector
-  j.stat.sumOfSquares <- function(dataVector){
-    if(!is.vector(dataVector)){
-      stop('Argument to j.stat.sumOfSquares is not a vector.');
-    }
-    sumOfSquares <- sum((dataVector - mean(dataVector))^2);
-    return(sumOfSquares);
-  }
+
   totalSS <- j.stat.sumOfSquares(cw$weight);
   
-  # select 1st feed type
   feedTypes <- levels(cw$feed); # feed is a factor with 6 levels.
   
   withinSS = 0;
   for(i in 1:length(feedTypes)){
-    feedData<- cw[(cw$feed==feedTypes[i]),];
+    feedData<- subset(cw, feed==feedTypes[i]);
     ssi <- j.stat.sumOfSquares(feedData$weight);
     withinSS <- withinSS+ssi;
   }
