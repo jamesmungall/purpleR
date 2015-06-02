@@ -47,9 +47,6 @@ chickenFeedsANOVA<-function(){
                      MSbetween = MSbetween, MSwithin=MSwithin,
                      Fresult=Fresult, pvalue=pvalue);
   
-  return(anovaTable);
-  
-  
-  
+  return(anovaTable); 
 }
 
