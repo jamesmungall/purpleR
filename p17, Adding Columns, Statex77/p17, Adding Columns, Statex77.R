@@ -13,6 +13,6 @@ statex77<-function(){
   ms$Div<-state.division;
   ms$Region<-state.region;
 
-  
+  return(ms);
   
 }
