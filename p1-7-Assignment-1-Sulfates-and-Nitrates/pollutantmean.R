@@ -1,5 +1,14 @@
 pollutantmean<-function(directory='specdata',pollutant,id=1:332){
+  ## 'directory' is a character vector of length 1 indicating
+  ## the location of the CSV files
   
+  ## 'pollutant' is a character vector of length 1 indicating
+  ## the name of the pollutant for which we will calculate the
+  ## mean; either "sulfate" or "nitrate".
+  
+  ## 'id' is an integer vector indicating the monitor ID numbers
+  ## to be used
+  # add preceeding zeros
   getFilenames <-function(allids){
     allFilenames = sapply(allids,function(oneid){
       oneid = str_pad(oneid,3,pad='0');
