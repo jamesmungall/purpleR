@@ -1,0 +1,13 @@
+## Chickwts using Dplyr methods
+```{r }
+library(dplyr)
+cw1<-tbl_df(chickwts)
+glimpse(cw1)
+cw2<- cw1 %>%
+  arrange(feed,weight)
+glimpse(cw2)
+cw3<- cw2 %>% 
+  group_by(feed) %>%
+  summarise(meanWeight=mean(weight))
+glimpse(cw3)
+```

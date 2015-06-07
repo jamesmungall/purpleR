@@ -1,16 +1,33 @@
-using_ddply<-function(){
-  #
-  # Using ddply to Summarise data by group      purple book p26, 3.6.15
-  #---------------------------------------              reviewed 7.6.15
-  #
-  # ref: http://www.cookbook-r.com/Manipulating_data/Summarizing_data/
-  #
-  # Problem: You want to do summarize your data (with mean, standard deviation, etc.), broken down by group.
-# Suppose you have this data and want to find the N, mean of change,
-# standard deviation, and standard error of the mean for each group, 
-# where the groups are specified by each combination of sex and condition:
-# F-placebo, F-aspirin, M-placebo, and M-aspirin.
+Summarise Data by Group       purple book p26, 3.6.15
+========================================================
 
+ref: http://www.cookbook-r.com/Manipulating_data/Summarizing_data/
+  
+Problem: You want to do summarize your data (with mean, standard deviation, etc.), broken down by group.
+ Suppose you have this data and want to find the N, mean of change,
+ standard deviation, and standard error of the mean for each group, 
+ where the groups are specified by each combination of sex and condition:
+ F-placebo, F-aspirin, M-placebo, and M-aspirin.
+
+
+```r
+library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+## 
+## The following object is masked from 'package:stats':
+## 
+##     filter
+## 
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
 data <- read.table(header=TRUE, text='
                    subject sex condition before after change
                    1   F   placebo   10.1   6.9   -3.2
@@ -44,26 +61,34 @@ data <- read.table(header=TRUE, text='
                    28   M   aspirin   11.6   8.3   -3.3
                    30   F   placebo   10.3   8.3   -2.0
                    ')
+```
 
-# Run the functions length, mean, and sd on the value of "change" for each group, 
-# broken down by sex + condition
-cdata <- ddply(data, c("sex", "condition"), summarise,
-               N    = length(change),
-               mean = mean(change),
-               sd   = sd(change),
-               se   = sd / sqrt(N)
-)
-cdata
-#>   sex condition  N      mean        sd        se
-#> 1   F   aspirin  5 -3.420000 0.8642916 0.3865230
-#> 2   F   placebo 12 -2.058333 0.5247655 0.1514867
-#> 3   M   aspirin  9 -5.411111 1.1307569 0.3769190
-#> 4   M   placebo  4 -0.975000 0.7804913 0.3902456
+A boxplot of the data reveals the differences:
 
-# alternative method
+
+```r
+boxplot(data$change ~ data$sex + data$condition)
+```
+
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+### Run the functions length, mean, and sd on the value of "change" for each group, 
+broken down by sex + condition
+
+
+```r
 data %>% 
   group_by(sex,condition) %>%
   summarise_each(funs(length,mean,sd),change) %>%
   mutate(se=sd/sqrt(length))
+```
 
-}
+```
+## Source: local data frame [4 x 6]
+## Groups: sex
+## 
+##   sex condition length      mean        sd        se
+## 1   F   aspirin      5 -3.420000 0.8642916 0.3865230
+## 2   F   placebo     12 -2.058333 0.5247655 0.1514867
+## 3   M   aspirin      9 -5.411111 1.1307569 0.3769190
+## 4   M   placebo      4 -0.975000 0.7804913 0.3902456
+```

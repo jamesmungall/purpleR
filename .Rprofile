@@ -1,5 +1,5 @@
 library(stringr)
 library(tidyr)
-library(plyr)
 library(dplyr)
 library(xlsx)
+library(tester)
