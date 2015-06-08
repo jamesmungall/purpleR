@@ -1,1 +1,22 @@
+Selecting nth value of a column value       purple book pg 35, 8.6.15
+-------------------------------------
 
+Ref: Data wrangling with tidyr and dplyr cheat sheet.pdf, (in pdfs folder)
+
+Problem:
+  I want to find the seonc heaviest chicken who was fed horsebean.
+     weight      feed
+     179 horsebean
+     160 horsebean
+. 71 obs, 6 factors
+
+Solution:
+
+```{r}
+cw<-tbl_df(chickwts)
+cw %>%
+  filter(feed=='horsebean') %>%
+  summarise(second=nth(weight,2,order_by=weight)
+```
+We can this of this as, find nth value of weight where n=2. Use 'second' as the name of the column in the result.
+Result is second; 124 (1 x 1) local data frame
