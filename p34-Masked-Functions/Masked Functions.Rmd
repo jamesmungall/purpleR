@@ -1,1 +1,12 @@
+Masked Functions    Purple book pg 34, 8.6.15
+------------------
+* Problem
+- When using dplyr""filter I cannot just use 'filter' because this calls stats:filter
 
+* Solution
+- Change the order of loading the packages.
+
+1. detach both packages; detach(package::dplyr, unload=TRUE)
+2.                       detach(package::stats, unload=TRUE)
+3. Load stats then dplyr; library(stats)
+4.                        library(dplyr)
