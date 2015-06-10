@@ -1,0 +1,18 @@
+Cakes
+========================================================
+
+
+```{r}
+cakes <- read.csv('cakes.csv', stringsAsFactors=F)
+
+ingr = c('butter/g', 'sugar/g',   'eggs',  'flour/g',   'milk/ml')
+scone =c(75,50,2*60,450, 225)
+pie(scone, labels=ingr, main='Scone')
+scotchPancakes =c(0,40,1*60,175,200)
+pie(scotchPancakes[-1], labels=ingr[-1], main='Scotch Pancakes')
+buns=c(50,50,1*60,450,150)
+pie(buns, labels=ingr, main='Buns')
+frenchMadeleines=c(150,150,3*60,150,0)
+pie(frenchMadeleines[-5], labels=ingr[-5], main='French Madeleines')
+
+```

@@ -1,0 +1,12 @@
+Class,     Name,                butter/g, sugar/g,   eggs,  flour/g,   milk/ml
+Cake,      Lemon Drizzle,       225,      225,        4,      225,      0
+Cake,      Victoria sponge,     200,      200,        4,      200,      0
+Cake,      Cupcakes,            NA,       175,        3,      225,      0
+Cake,      Pineapple,           100,      100,        2,      100,      0
+Biscuit,  Shortbread,           225,      100,        0,      325,      0
+Scone,    Scone,                75,       50,         2,      450,      225
+Pancake,  Scotch pancakes       0,        40,         1,      175,      200
+Bun,      Hot Cross Buns        50,       50,         1,      450,      150
+Cake,     French Madeleines     150,      150,        3,      150,      0
+
+
