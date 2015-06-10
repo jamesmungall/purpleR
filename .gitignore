@@ -1,7 +1,4 @@
 /.project
-.Rproj.user
-.DS_Store	
-.RData
-.Rhistory	
-.Rprofile	
+.*
+!/.gitignore
 purpleR.Rproj
