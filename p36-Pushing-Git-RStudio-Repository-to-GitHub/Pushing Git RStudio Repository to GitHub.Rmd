@@ -1,2 +1,14 @@
 p36, Pushing Git RStudio Repository to GitHub       10.6.14
 ---------------------------------------------
+
+In RStudio choose file -> new Project then Crate profject from Version Control repository.
+
+Choose git repository and enter the SSH url for the repository on Git Hub.
+
+This should copy the repository into a new folder in RStudio.
+
+To push changes, use tools -> version control -> commit, and then 'push'.
+
+Git config file must use the SSH format e.g. git@github.com:jamesmungall/Getting-and-Cleanin-Data.git
+
+Git config file is in hidden .git folder of project directory.
