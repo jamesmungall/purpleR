@@ -1,0 +1,6 @@
+Joins                 purple book p38  11.6.15
+========================================================
+ref: Data Wrangling with dplyr and tidyr Cheat Sheet
+
+
+
