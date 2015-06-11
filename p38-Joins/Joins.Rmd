@@ -2,5 +2,49 @@ Joins                 purple book p38  11.6.15
 ========================================================
 ref: Data Wrangling with dplyr and tidyr Cheat Sheet
 
+table 'a'           table 'b'
+  x1 | x2             x1 | x3
+  --------------------------
+1  A |  1             A |  TRUE
+2  B |  2             B | FALSE
+3  C |  3             D |  TRUE
+```{r}
+x1 <- c('A','B','C')
+x2 <- c(1,2,3)
+a <- data_frame(x1,x2)
+x1 <- c('A','B','D')
+x3 <- c(T,F,T)
+b <- data_frame(x1,x3)
+```
+We can retreive x3 values from b reference by x1 values from a
+```{r}
+left_join(a,b,by='x1')
+```
+  x1 x2    x3
+1  A  1  TRUE
+2  B  2 FALSE
+3  C  3    NA
 
+A more complicated example may be
+
+table 'a'       table 'b'
+id    name      id    maths_score
+1     Adam      1     67
+2     Bill      2     91
+3     Colin     3     33
+
+Therefore information about a name or maths score can be combined by id so that we know who scored well on the maths test.
+```{r}
+name <- c('Adam','Bill','Colin')
+id <- c(1,2,3)
+a <- data_frame(id,name)
+id <- c(1,2,3)
+maths_score <- c(67,92,33)
+b <- data_frame(id,maths_score)
+left_join(a,b,by='id')
+```
+  id  name maths_score
+1  1  Adam          67
+2  2  Bill          92
+3  3 Colin          33
 
