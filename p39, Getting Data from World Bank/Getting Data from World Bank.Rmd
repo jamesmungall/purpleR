@@ -1,0 +1,27 @@
+Getting Data from World Bank          purple book pg39, 13.6.15
+========================================================
+
+ref: data.worldbank.org
+
+Example: I can download a csv of net migration by going to data.worldbank.org/indicator and choosing 'net migration' under the Aid Effectiveness header. Then choose 'download data' which can be either excel, xml or csv
+```{r}
+csvFilename <- '/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/netMigration.csv'
+netMigration <- read.csv(csvFilename, stringsAsFactors=F, skip=2); # There are two title lines to ignore
+```
+Or you can download the excel file.
+```{r}
+excelFilename <- '/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/netMigration.xls'
+library(xlsx)
+netMigration2 <- read.xlsx(excelFilename,sheetIndex=1,startRow=2);# Ignore first row
+View(netMigration2)
+```
+
+The code below successfully downloads a table of the Lower Middle Income countries
+```{r}
+url <- 'http://api.worldbank.org/countries?incomeLevel=LMC&format=json'
+savedFile <- "/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/incomeLevelLMC.json"
+download.file(url, destfile = savedFile, method = "curl")
+library(jsonlite)
+jsonData <- fromJSON(savedFile)
+View(jsonData)
+```
