@@ -1,0 +1,29 @@
+Counting Countries by Income Level Across Regions     Purple Book pg 40, 16.6.15
+========================================================
+ref:http://data.worldbank.org/
+
+Aim: create a table in the following format:
+
+     incomeLevel.value EAS ECS LCN MEA NAC SAS SSF
+1           Low income   3   1   1   0   0   3  26
+2  Lower middle income  12   7   7   6   0   4  14
+3  Upper middle income   9  13  18   7   0   1   7
+4 High income: nonOECD   8  13  14   7   1   0   1
+5    High income: OECD   4  23   1   1   2   0   0
+
+
+```{r}
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+url <- 'http://api.worldbank.org/countries?format=json&per_page=1000'
+savedFile <- "/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/countries.json"
+download.file(url, destfile = savedFile, method = "curl")
+jsonData <- fromJSON(savedFile)
+countries <- jsonData[[2]] %>% flatten() %>% tbl_df() %>% select(name,region.id,incomeLevel.value) %>% count(region.id,incomeLevel.value) %>% spread(key=region.id,value=n)
+countries <- countries[-1,-6]; # removes aggregates and NA column
+
+countries <- countries[c(3,4,5,1,2),]; # change order from lowest to highest
+countries[is.na(countries)] <- 0; # convert NAs to zeros
+View(countries)
+```
