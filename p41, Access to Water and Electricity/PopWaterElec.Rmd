@@ -1,0 +1,90 @@
+PopWaterElec                              PurpleBook pg42  19.6.15
+==================================================================
+
+ref: rpubs.com/justmarkham/dplyr-tutorial
+    data.worldbank.org  
+    http://www.wssinfo.org/data-estimates/tables/
+    
+    
+regionIncomeDf
+============
+```{r}
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+regionIncomeUrl <- 'http://api.worldbank.org/countries?format=json&per_page=1000'
+regionIncomeFile <- "/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/countries.json"
+download.file(regionIncomeUrl, destfile = regionIncomeFile, method = "curl")
+jsonRegionIncome <- fromJSON(regionIncomeFile)
+regionIncomeDf <- jsonRegionIncome[[2]] %>%
+  flatten() %>% tbl_df() %>%
+  select(country.value=name,region.id,incomeLevel.id) %>%
+  filter(region.id != 'NA')
+View(regionIncomeDf)
+```
+populationDf
+============
+```{r}
+populationUrl <- 'http://api.worldbank.org/countries/indicators/SP.POP.TOTL?per_page=1000&date=2010&format=json'
+populationFile <- "/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/population/population.json"
+download.file(populationUrl, destfile = populationFile, method = "curl")
+jsonPopulation <- fromJSON(populationFile)
+populationDf <- jsonPopulation[[2]][-(1:34),] %>%
+  flatten() %>% tbl_df() %>%
+  transmute(country.value, pop=as.numeric(value))
+View(populationDf)
+```
+percElecDf
+==========
+```{r}
+elecUrl<-'http://api.worldbank.org/countries/indicators/EG.ELC.ACCS.ZS?per_page=1000&date=2010&format=json'
+elecFile <- "/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/accessToElectricity/accessToElectricity.json"
+download.file(elecUrl, destfile = elecFile, method = "curl")
+elecData <- fromJSON(elecFile)
+percElecDf <- elecData[[2]][-(1:34),] %>% flatten() %>% tbl_df() %>%
+  transmute(country.value, elecPerc = as.numeric(value))
+View(percElecDf)
+```
+percWaterDf
+===========
+Use http://www.wssinfo.org/data-estimates/tables/ to select data.
+Export as '/Users/jamesmungall/MyR/GettingCleaningData/data/accessToImprovedWater.csv'
+```{r}
+filename = '/Users/jamesmungall/MyR/GettingCleaningData/data/accessToImprovedWater.csv'
+waterData <- read.csv(filename, stringsAsFactors=F)
+percWaterDf <- waterData[4:238,]
+percWaterDf <- percWaterDf %>% flatten() %>% tbl_df() %>%
+  transmute(country.value=X, waterPerc = as.numeric(Water))
+percWaterDf <- percWaterDf[complete.cases(percWaterDf),]
+View(percWaterDf)
+```
+join to make popElecWaterDf
+===========================
+
+```{r}
+popElecWaterDf1 <- left_join(regionIncomeDf,populationDf)
+popElecWaterDf2 <- left_join(popElecWaterDf1,percElecDf)
+popElecWaterDf3 <- left_join(popElecWaterDf2,percWaterDf)
+# Turn percentages to populations
+popElecWaterDf <- popElecWaterDf3 %>% mutate(elecPop = pop * elecPerc/100, waterPop = pop * waterPerc/100) %>%
+  select(region.id,incomeLevel.id,pop,elecPop,waterPop)
+View(popElecWaterDf)
+```
+Group by region and sum to make gpPopElecWaterDf
+================================================
+```{r}
+gpPopElecWaterDf <- popElecWaterDf %>% group_by(region.id,incomeLevel.id) %>%
+  summarise_each(funs(sum(.,na.rm=T)),pop,elecPop,waterPop) %>%
+ mutate(percElec = elecPop * 100 / pop, percWater = waterPop * 100 / pop)
+View(gpPopElecWaterDf)
+```
+Filter to remove small (< 1/10th of largest group population) groups, filterPopElecWaterDf
+```{r}
+largestGroupPopulation <- max(gpPopElecWaterDf$pop)
+filterPopElecWaterDf <- gpPopElecWaterDf %>% filter(pop > largestGroupPopulation / 10) %>%
+  select(incomeLevel.id,pop,percElec,percWater)
+View(filterPopElecWaterDf)
+```
+
+
+
