@@ -1,0 +1,72 @@
+Access to Water                   Purple book pg 41, 17.6.15
+=================================================================
+ref: rpubs.com/justmarkham/dplyr-tutorial
+    data.worldbank.org  
+
+population
+==========
+Create table of population for each region / income level combination
+```{r}
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+populationUrl <- 'http://api.worldbank.org/countries/indicators/SP.POP.TOTL?per_page=1000&date=2013&format=json'
+populationFile <- "/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/population/population.json"
+download.file(populationUrl, destfile = populationFile, method = "curl")
+jsonPopulation <- fromJSON(populationFile)
+population <- jsonPopulation[[2]][-(1:34),] %>%
+  flatten() %>% tbl_df() %>%
+  transmute(country.value, pop=as.numeric(value))
+```
+countries
+=========
+```{r}
+countriesUrl <- 'http://api.worldbank.org/countries?format=json&per_page=1000'
+countriesFile <- "/Users/jamesmungall/MyR/GettingCleaningData/data/worldBank/countries.json"
+download.file(countriesUrl, destfile = countriesFile, method = "curl")
+jsonData <- fromJSON(countriesFile)
+countries <- jsonData[[2]] %>%
+  flatten() %>% tbl_df() %>%
+  select(country.value=name,region.id,incomeLevel.id)
+```  
+popRegionIncome
+===============
+combine population and region/incomeLevel data
+```{r}
+popRegionIncome <- left_join(population,countries,by='country.value')
+View(popRegionIncome)
+```
+
+accessToImprovedWater
+==================
+Use http://www.wssinfo.org/data-estimates/tables/ to select data.
+Export as '/Users/jamesmungall/MyR/GettingCleaningData/data/accessToImprovedWater.csv'
+
+```{r}
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+filename = '/Users/jamesmungall/MyR/GettingCleaningData/data/accessToImprovedWater.csv'
+waterData <- read.csv(filename, stringsAsFactors=F)
+accessToImprovedWater <- waterData[4:238,]
+accessToImprovedWater <- accessToImprovedWater %>% flatten() %>% tbl_df() %>%
+  transmute(country.value=X, waterPerc = as.numeric(Water))
+View(accessToImprovedWater)
+```
+
+popWater
+======
+```{r}
+popWater <-  left_join(popRegionIncome,accessToImprovedWater,by='country.value') %>%
+  mutate(waterPop = pop * waterPerc/100) %>%
+  group_by(region.id,incomeLevel.id)
+
+
+popWater2 <- popWater[complete.cases(popWater),] %>%
+  summarise_each(funs(sum), totalPop=pop,waterPop) %>%
+  mutate(waterPerc = (100 * waterPop / totalPop)) %>%
+  select(region.id,incomeLevel.id,waterPerc) %>%
+  spread(key=region.id,value=waterPerc)
+View(popWater2)
+```
+
