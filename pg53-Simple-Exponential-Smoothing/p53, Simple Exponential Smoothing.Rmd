@@ -1,7 +1,7 @@
-# Simple Exponential Smoothing, 6.6.16, Purple book pg 53
+## Simple Exponential Smoothing, 6.6.16, Purple book pg 53
 
-### Example data, Ref: Pink book pg 83, ASW pg 751-3
-### md <- read.delim("~/MyR/Time Series/ASWp753.txt")
+#### Example data, Ref: Pink book pg 83, ASW pg 751-3
+#### md <- read.delim("~/MyR/Time Series/ASWp753.txt")
   
 
 ```{r}
