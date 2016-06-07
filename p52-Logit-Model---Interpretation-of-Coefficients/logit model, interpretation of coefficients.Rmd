@@ -1,0 +1,13 @@
+### Logit Model - Interpretation of Coefficients, 7.6.16
+
+#### Purple book pg 52
+#### Pink ibook pg 113
+#### data.princeton.edu/wws509/notes/c3.pdf
+```{r}
+contraceptionAgeDesire <- read.delim("~/MyR/Regression/contraceptionAgeDesire.txt")
+print(contraceptionAgeDesire)
+glm(cbind(using,notUsing)~age+desire,family=binomial,data=contraceptionAgeDesire)
+```
+Interpretation
+
+log Pr(using)/Pr(notUsing) = -1.691 + 0.0441age - 0.8259desire
