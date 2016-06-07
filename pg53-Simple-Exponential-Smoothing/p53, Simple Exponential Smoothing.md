@@ -1,0 +1,63 @@
+Simple Exponential Smoothing, 6.6.16, Purple book pg 53
+
+Example data, Ref: Pink book pg 83, ASW pg 751-3
+md <- read.delim("~/MyR/Time Series/ASWp753.txt")
+  
+ Week  Value
+  1   	17
+	2	    21
+	3	    19
+	4	    23
+	5	    18
+	6	    16
+	7	    20
+	8	    18
+	9	    22
+	10  	20
+	11  	15
+	12  	22
+
+```r
+ses<-function(){
+  # Example data, Ref: Pink book pg 83, ASW pg 751-3
+  # md <- read.delim("~/MyR/Time Series/ASWp753.txt")
+
+  # using in-built functionality to do calculation
+  HWresult<-HoltWinters(md$Value,alpha=0.2,beta=F,gamma=F)
+  fittedValues<-as.data.frame(HWresult$fitted)
+  md$yhat<-c(NaN,fittedValues$xhat)
+  
+    View(md)
+
+  
+  ggplot(md, aes(Week)) + 
+   geom_line(aes(y = Value, colour = "Value"))+ 
+   geom_line(aes(y = yhat, colour = "yhat"))
+}
+```
+  
+#  Week  Value	yhat
+#	  1	  17  	NaN
+#	  2	  21  	17.00000
+#	  3	  19  	17.80000
+#	  4	  23  	18.04000
+#	  5	  18  	19.03200
+# 	6	  16  	18.82560
+#	  7 	20  	18.26048
+#	  8 	18  	18.60838
+#	  9 	22  	18.48671
+#	  10	20  	19.18937
+#	  11	15  	19.35149
+#	  12	22  	18.48119
+
+
+```r
+  ggplot(md, aes(Week)) + 
+   geom_line(aes(y = Value, colour = "Value"))+ 
+   geom_line(aes(y = yhat, colour = "yhat"))
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "ggplot"
+```
+
