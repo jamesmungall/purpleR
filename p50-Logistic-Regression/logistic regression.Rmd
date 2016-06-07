@@ -1,0 +1,12 @@
+## Logistic Regression, 1.5.16
+### ref: Purple book pg 50,
+### data.princeton.edu/R/glms.html
+### Pink ibook pg 94, 96
+
+```{r}
+delinq <- read.delim("~/MyR/Regression/delinq.txt")
+print(delinq)
+lrfit<-glm(cbind(Yes,No)~X2+X3+X1,data=delinq,family=binomial)
+summary(lrfit)
+```
+We are now in a position to model various combinations of X1, X2, X3
