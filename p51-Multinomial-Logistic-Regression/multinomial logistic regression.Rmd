@@ -1,0 +1,15 @@
+### Multinomial Logistic Regression, 1.5.16
+
+##### Purple book pg 51
+##### Pink ibook pg97
+##### https://onlinecourses.science.psu.edu/stat504/node/226
+```{r}
+install.packages('vgam')
+library(VGAM)
+gator <- read.table("~/MyR/Regression/gator.txt", header=T, quote="\"")
+print(gator)
+lrfit<-vglm(cbind(Fish,Invertebrate,Reptile,Bird,Other)~Gender+Size+Lake,data=gator,family=multinomial)
+summary(lrfit)
+```
+We are now in a position to try various models.
+
