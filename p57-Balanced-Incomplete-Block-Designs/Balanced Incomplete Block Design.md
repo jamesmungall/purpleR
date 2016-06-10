@@ -3,6 +3,8 @@
 ##### ref: Pink iBook pg 38,
 #####     http://www.r-bloggers.com/generating-balanced-incomplete-block-designs-bibd/
     
+    
+    
 
 ```r
 require(crossdes)
@@ -15,26 +17,32 @@ require(crossdes)
 ```
 
 ```r
-my.design = find.BIB(7, 7, 3)
-print(my.design)
-```
-
-```
-##      [,1] [,2] [,3]
-## [1,]    2    5    6
-## [2,]    1    3    5
-## [3,]    2    3    4
-## [4,]    1    4    6
-## [5,]    3    6    7
-## [6,]    1    2    7
-## [7,]    4    5    7
-```
-
-```r
+# format is find.BIB(treatments(t), blocks(b), blocksize(k) )
+my.design = find.BIB(4, 4, 3)
+# To check if balanced;
 isGYD(my.design)
 ```
 
 ```
 ## 
 ## [1] The design is a balanced incomplete block design w.r.t. rows.
+```
+
+```r
+# The output is written in numbers. I have previously used letters for treatments.
+treat_letters <- LETTERS[my.design]
+for(i in 1:length(my.design)){
+  my.design[i] <- treat_letters[i]
+}
+
+# Note that blocks are rows. When I have written BIBD I have used a column for each block.
+# To change this, transpose matrix output.
+print(t(my.design))
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,] "B"  "A"  "A"  "A" 
+## [2,] "C"  "C"  "B"  "B" 
+## [3,] "D"  "D"  "C"  "D"
 ```
