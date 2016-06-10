@@ -1,0 +1,11 @@
+### Balanced Incomplete Block Designs, 10th June 2016
+
+##### ref: Pink iBook pg 38,
+#####     http://www.r-bloggers.com/generating-balanced-incomplete-block-designs-bibd/
+    
+```{r}
+require(crossdes)
+my.design = find.BIB(7, 7, 3)
+print(my.design)
+isGYD(my.design)
+```
