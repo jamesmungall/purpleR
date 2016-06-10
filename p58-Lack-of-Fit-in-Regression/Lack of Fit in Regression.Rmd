@@ -1,0 +1,12 @@
+### Lack of Fit in Regression, 10th June 2016
+
+##### ref: Pink iBook pg 49,
+#####      MyR/Regression/DraperSmith_pg102.txt
+
+```{r}
+ds102 <- read.delim("~/MyR/Regression/DraperSmith_pg102.txt")
+print(ds102)
+aov.result<-aov(Y~X + factor(X), data=ds102)
+summary(aov.result)
+```
+We interpret factor(X) as lack of fit and residuals as pure error.
