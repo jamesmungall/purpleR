@@ -1,0 +1,12 @@
+### Stepwise Regression, 11th June 2016
+
+##### ref: Pink ibook pg 64, 65
+##### https://onlinecourses.science.psu.edu/stat501/node/329
+
+```{r}
+cement <- read.table("~/MyR/Regression/cement.txt", header=T, quote="\"")
+lm_null<-lm(y~1,data=cement)
+lm_full<-lm(y~x1+x2+x3+x4,data=cement)
+step_result <- step(lm_null, scope=list(lower=lm_null, upper=lm_full), direction="forward")
+```
+We can see that minimum AIC is acheived for y ~ x4 + x1 + x2
