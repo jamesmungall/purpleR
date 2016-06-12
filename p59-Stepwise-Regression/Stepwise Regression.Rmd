@@ -10,3 +10,20 @@ lm_full<-lm(y~x1+x2+x3+x4,data=cement)
 step_result <- step(lm_null, scope=list(lower=lm_null, upper=lm_full), direction="forward")
 ```
 We can see that minimum AIC is acheived for y ~ x4 + x1 + x2
+
+Alternatively use bestglm from bestglm package.
+```{r}
+library(bestglm)
+# This method requires response, y, to be in last column.
+cement2 <- cement[c(2,3,4,5,1)]
+
+bestglm_result <- bestglm(cement2)
+bestglm_result
+bestglm_result$BestModels
+
+#Note that this result is different, suggesting y ~ x1 + x2. This is because BIC rather than AIC #is used as the criterion by default. We can change this, and see that y ~ x4 + x1 + x2 is #chosen as before.
+
+bestglm_resultAIC <- bestglm(cement2, IC="AIC")
+bestglm_resultAIC
+```
+bestglm does not show us the steps involved. However, it does give a useful est, SE output of the final result, and a useful output of the tested models with AIC for comparison. Note that AIC is equivalent to Cp.
