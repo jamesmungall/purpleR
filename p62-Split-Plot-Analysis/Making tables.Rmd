@@ -1,0 +1,20 @@
+Making Tables for Split Plot Analysis
+========================================================
+
+
+```{r}
+library(dplyr)
+  var_date_block_yields <- read.delim("split_plot.txt")
+  var_block_totals <- var_date_block_yields %>% group_by(block, variety) %>% summarise(sum(yield))
+  block_totals     <- var_date_block_yields %>% group_by(block) %>% summarise(sum(yield))
+  var_totals       <- var_date_block_yields %>% group_by(variety) %>% summarise(sum(yield))
+  date_totals      <- var_date_block_yields %>% group_by(date) %>% summarise(sum(yield))
+  date_var_totals  <- var_date_block_yields %>% group_by(date, variety) %>% summarise(sum(yield))
+
+
+block_totals
+var_totals
+date_totals
+var_block_totals
+date_var_totals
+```
