@@ -1,0 +1,43 @@
+---
+title: "Multiple Regression Example"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### Multiple Regession Example, 22nd Nov 2017
+
+##### https://www.statmethods.net/stats/regression.html
+
+```{r}
+library(readr)
+ cement <- read_delim("~/Documents/purpleR/p63- Multiple Regression Example/cement.txt", 
+     "\t", escape_double = FALSE, trim_ws = TRUE)
+fit <- lm(y ~ x1 + x2 + x3, data=cement)
+summary(fit) # show results
+
+# Other useful functions 
+coefficients(fit) # model coefficients
+confint(fit, level=0.95) # CIs for model parameters 
+fitted(fit) # predicted values
+residuals(fit) # residuals
+anova(fit) # anova table 
+vcov(fit) # covariance matrix for model parameters 
+influence(fit) # regression diagnostics
+  
+# Diagnostic plots
+layout(matrix(c(1,2,3,4),2,2)) # optional 4 graphs/page 
+plot(fit)
+
+# compare models
+ fit1 <- lm(y ~ x1 + x2 + x3 + x4, data=cement)
+ fit2 <- lm(y ~ x1 + x2, data = cement)
+ anova(fit2, fit1)
+ 
+ # Stepwise Regression
+library(MASS)
+fit <- lm(y~x1+x2+x3+x4,data=cement)
+step <- stepAIC(fit, direction="both")
+step$anova # display results
+```
