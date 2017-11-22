@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(readr)
- cement <- read_delim("~/Documents/purpleR/p63- Multiple Regression Example/cement.txt", 
+ cement <- read_delim("~cement.txt", 
      "\t", escape_double = FALSE, trim_ws = TRUE)
 fit <- lm(y ~ x1 + x2 + x3, data=cement)
 summary(fit) # show results
