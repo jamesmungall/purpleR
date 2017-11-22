@@ -1,0 +1,33 @@
+---
+title: "CycleAS"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+##### CycleAS, 22nd November 2017
+### Analysis of some of this AS statistics dataset, including data wrangling and plots
+```{r}
+
+
+# To open excel data;
+library(readxl)
+cycleData <- read_excel("~/Documents/purpleR/p64-CycleAS/9781471852978_Data_set (1).xlsx")
+```
+To convert gender from character to factor use
+```{r}
+cd <- cycleData
+cd$gender <- as.factor(cd$gender)
+```
+To see relative frequencies of males and females use
+```{r}
+summary(cd$gender)
+```
+  and we see that most accidents involve males.
+  
+To see a histgram of ages use
+```{r}
+hist(cd$age, breaks=10)
+```
+and we see that most are under 20yrs old.
