@@ -1,10 +1,11 @@
-### Exploratory Factor Analysis
-##### 30th June 2018
+
 ---
 title: "Exporatory Factory Analysis"
 output: html_document
 ---
 
+### Exploratory Factor Analysis
+##### 30th June 2018
 https://www.promptcloud.com/blog/exploratory-factor-analysis-in-r/
 
 
