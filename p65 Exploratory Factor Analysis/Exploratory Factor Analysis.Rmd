@@ -1,20 +1,20 @@
+### Exploratory Factor Analysis
+##### 30th June 2018
 ---
 title: "Exporatory Factory Analysis"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 https://www.promptcloud.com/blog/exploratory-factor-analysis-in-r/
 
-##### Exploratory Factor Analysis, 30th June 2018
+
 ### Analysis of dataset using psych and GPArotation packages
 
 Open EFA.csv file and tore as a variable called data
 
-data <- read_delim("p65 Exploratory Factor Analysis/EFA.csv")
+
 ```{r}
+data <- read_delim("p65 Exploratory Factor Analysis/EFA.csv")
 View(data)
 ```
 install.packages('psych')
@@ -43,3 +43,4 @@ We see a simpler structure with three factors. Look for a low root mean square r
 ## Naming the factors
 
 We may classify the factors as MR1 = price, MR2 = quality, MR3 = reviews
+(dummy adjustment)
