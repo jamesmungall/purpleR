@@ -1,0 +1,45 @@
+---
+title: "Exporatory Factory Analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+https://www.promptcloud.com/blog/exploratory-factor-analysis-in-r/
+
+##### Exploratory Factor Analysis, 30th June 2018
+### Analysis of dataset using psych and GPArotation packages
+
+Open EFA.csv file and tore as a variable called data
+
+data <- read_delim("p65 Exploratory Factor Analysis/EFA.csv")
+```{r}
+View(data)
+```
+install.packages('psych')
+install.packages('GPArotation')
+library(psych)
+library(GPArotation)
+
+
+##Parallel Analysis - to determine max no. factors
+```{r}
+parallel <- fa.parallel(data, fm = 'minres', fa = 'fa')
+```
+Output states: 'Parallel analysis suggest that the number of factors is 5'
+
+## Factor Analysis - to determine the best number of factors and their meanings.
+```{r}
+threefactor <- fa(data,nfactors = 3,rotate = "oblimin",fm="minres")
+print(threefactor)
+fourfactor <- fa(data,nfactors = 4,rotate = "oblimin",fm="minres")
+print(fourfactor)
+print(threefactor$loadings,cutoff = 0.3)
+print(fourfactor$loadings,cutoff = 0.3)
+```
+We see a simpler structure with three factors. Look for a low root mean square residual and high Tucker-Lewis Index for good adequacy.
+
+## Naming the factors
+
+We may classify the factors as MR1 = price, MR2 = quality, MR3 = 
