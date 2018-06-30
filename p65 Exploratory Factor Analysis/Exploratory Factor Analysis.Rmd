@@ -42,4 +42,4 @@ We see a simpler structure with three factors. Look for a low root mean square r
 
 ## Naming the factors
 
-We may classify the factors as MR1 = price, MR2 = quality, MR3 = 
+We may classify the factors as MR1 = price, MR2 = quality, MR3 = reviews
