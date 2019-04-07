@@ -1,4 +1,4 @@
-
+Solving a Matrix using augmented matrix method    Purple book pg 34, 8.6.15
 ## Generalising this
 ##A<-matrix(c(3, 1, -1, -1, -7, 1, -2, 1, 1, 0, -1, 1, 1, 1, 11, 2, 3, -1, 1, 10),4,5,byrow=TRUE)
 
